@@ -1,0 +1,835 @@
+/* ==================================================
+   STYLE.CSS - KUAT TAILOR
+   ================================================== */
+
+/* --- Reset & Dasar --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px; /* Ukuran font dasar */
+}
+
+body {
+    font-family: var(--body-font);
+    line-height: 1.7;
+    color: var(--dark-color);
+    background-color: var(--background-color);
+    overflow-x: hidden; /* Mencegah scroll horizontal */
+}
+
+/* --- Variabel CSS --- */
+:root {
+    --primary-color: #1a3a5a; /* Biru tua */
+    --secondary-color: #e0ac69; /* Emas hangat */
+    --light-color: #ffffff;
+    --dark-color: #333333;
+    --grey-color: #f8f9fa; /* Abu sangat muda */
+    --background-color: #fdfdfd; /* Latar belakang hampir putih */
+
+    --heading-font: 'Playfair Display', serif;
+    --body-font: 'Lato', sans-serif;
+
+    --navbar-height: 70px;
+    --soft-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    --medium-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Utilitas Umum --- */
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font);
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+h1 { font-size: 3rem; }
+h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3.5rem;
+    position: relative;
+}
+/* Garis bawah H2 (kecuali di kontak) */
+h2:not(#contact h2)::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+h3 { font-size: 1.6rem; margin-bottom: 0.8rem; }
+h4 { font-size: 1.2rem; color: var(--secondary-color); margin-bottom: 0.5rem; font-family: var(--body-font); font-weight: 700; }
+
+p {
+    margin-bottom: 1.2rem;
+    /*color: #555;*/
+}
+
+a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--primary-color);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+section {
+    padding: 100px 0;
+    position: relative;
+}
+
+.btn {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--secondary-color), #d4a05d);
+    color: var(--primary-color);
+    padding: 14px 30px;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(224, 172, 105, 0.4);
+}
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 15px rgba(224, 172, 105, 0.5);
+    background: linear-gradient(45deg, #d4a05d, var(--secondary-color));
+}
+
+/* --- Animasi Fade-in --- */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Header / Navbar --- */
+.navbar {
+    background-color: transparent;
+    color: var(--light-color);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background-color 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+    height: var(--navbar-height);
+}
+.navbar.scrolled {
+    background-color: var(--primary-color);
+    box-shadow: var(--medium-shadow);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 10px 0 20px; /* Lebih sedikit padding kanan untuk menu */
+}
+
+.navbar .logo {
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--light-color);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+.navbar.scrolled .logo {
+    text-shadow: none;
+}
+.navbar .logo span {
+    color: var(--secondary-color);
+}
+
+.navbar nav ul {
+    list-style: none;
+    display: flex; /* Default untuk desktop */
+}
+.navbar nav ul li {
+    margin-left: 30px;
+}
+.navbar nav ul li a {
+    color: var(--light-color);
+    font-weight: bold;
+    padding: 5px 0;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    transition: color 0.3s ease;
+}
+.navbar.scrolled nav ul li a {
+    text-shadow: none;
+}
+.navbar nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--secondary-color);
+    transition: width 0.3s ease;
+}
+.navbar nav ul li a:hover,
+.navbar nav ul li a.active {
+    color: var(--secondary-color);
+}
+.navbar nav ul li a:hover::after,
+.navbar nav ul li a.active::after {
+    width: 100%;
+}
+
+/* Tombol Menu Mobile */
+.menu-toggle {
+    display: none; /* Sembunyi di desktop */
+    background: none;
+    border: none;
+    color: var(--light-color);
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: auto;
+    z-index: 1001;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+.navbar.scrolled .menu-toggle {
+    text-shadow: none;
+}
+
+/* --- Hero Section (#hero) --- */
+.hero {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #1a3a5a, #0a192f); /* Gradien biru */
+    color: var(--light-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: var(--navbar-height) 20px 20px;
+}
+.hero-content {
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeInHeroText 1.5s 0.5s ease-out forwards;
+}
+@keyframes fadeInHeroText {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    color: var(--light-color);
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+.hero h1 span {
+    color: var(--secondary-color);
+}
+.hero p {
+    font-size: 1.4rem;
+    max-width: 650px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+    line-height: 1.8;
+    margin: 0 auto 2.5rem auto; /* Center align block */
+}
+.hero .btn {
+    margin-top: 1rem;
+}
+
+/* --- About Section (#about) --- */
+#about {
+    background-color: var(--light-color);
+}
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+.about-image {
+    position: relative;
+    box-shadow: var(--medium-shadow);
+    border-radius: 10px;
+}
+.about-image::before { /* Border dekoratif */
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    border: 5px solid var(--secondary-color);
+    border-radius: 10px;
+    top: -20px;
+    left: -20px;
+    z-index: -1;
+    opacity: 0.3;
+}
+.about-content h3 {
+    margin-top: 0.5rem;
+}
+.about-content p {
+    color: #444;
+}
+.about-content ul {
+    list-style: none; /* Hapus bullet default */
+    padding-left: 0; /* Hapus padding kiri default */
+    margin-top: 1rem;
+}
+.about-content ul li {
+    margin-bottom: 0.5rem; /* Jarak antar item list */
+    color: #444; /* Warna teks list */
+}
+/* Ikon FontAwesome di dalam list */
+.about-content ul li i.fas {
+    color: var(--secondary-color);
+    margin-right: 8px;
+    width: 1.2em; /* Beri lebar agar teks rata */
+    text-align: center;
+}
+.about-content .btn {
+    margin-top: 1rem;
+}
+
+/* --- Services Section (#services) --- */
+#services {
+    background-color: var(--grey-color);
+}
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+.service-item {
+    background-color: var(--light-color);
+    padding: 40px 30px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: var(--soft-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.service-item::before { /* Lingkaran background ikon */
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 150px;
+    height: 150px;
+    background-color: rgba(224, 172, 105, 0.1);
+    border-radius: 50%;
+    transition: transform 0.5s ease;
+    z-index: 0;
+}
+.service-item:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--medium-shadow);
+}
+.service-item:hover::before {
+    transform: scale(1.2);
+}
+.service-icon {
+    font-size: 3.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+.service-item:hover .service-icon {
+    transform: scale(1.1) rotate(-5deg);
+}
+.service-item h4 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+.service-item p {
+    font-size: 0.95rem;
+    color: #555;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Gallery Section (#gallery) --- */
+#gallery {
+    background-color: var(--light-color);
+}
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: var(--soft-shadow);
+}
+.gallery-item img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover; /* Pastikan gambar memenuhi area tanpa distorsi */
+    transition: transform 0.4s ease;
+}
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 58, 90, 0.7);
+    color: var(--light-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    text-align: center;
+    padding: 20px;
+}
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+.gallery-overlay h4 {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    transform: translateY(10px);
+    transition: transform 0.4s 0.1s ease;
+}
+.gallery-item:hover .gallery-overlay h4 {
+    transform: translateY(0);
+}
+.gallery-overlay i { /* Ikon zoom */
+    font-size: 2rem;
+    margin-top: 10px;
+    transform: scale(0.8);
+    transition: transform 0.4s 0.2s ease;
+}
+.gallery-item:hover .gallery-overlay i {
+    transform: scale(1);
+}
+
+/* --- Contact Section (#contact) --- */
+#contact {
+    background-color: var(--grey-color);
+}
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 50px;
+    align-items: start;
+}
+#contact h2 { /* Khusus H2 di kontak */
+    text-align: left;
+    margin-bottom: 1rem;
+}
+/* .contact-form p, .contact-info p { } */ /* Biarkan gaya <p> global saja */
+
+.contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+/* Grouping style dasar untuk semua input form */
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form textarea,
+.contact-form select {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: var(--body-font);
+    margin-bottom: 15px;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+    background-color: var(--light-color); /* Latar belakang putih */
+    color: var(--dark-color); /* Warna teks input */
+}
+
+/* Style focus untuk semua input form */
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form input[type="tel"]:focus,
+.contact-form textarea:focus,
+.contact-form select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(224, 172, 105, 0.3);
+}
+
+/* Style spesifik untuk textarea */
+.contact-form textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+/* Style spesifik untuk select (termasuk panah kustom) */
+.contact-form select {
+    cursor: pointer;
+    /* Hilangkan tampilan default browser (termasuk panah) */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Tambahkan panah kustom menggunakan background SVG */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333333'%3E%3Cpath fill-rule='evenodd' d='M8 11.646l-4.854-4.854a.5.5 0 01.708-.708L8 10.232l4.146-4.146a.5.5 0 01.708.708L8 11.646z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px 16px;
+    /* Beri ruang padding kanan agar teks tidak menabrak panah */
+    padding-right: 40px;
+}
+
+/* (Opsional) Hapus style default di Edge lama */
+.contact-form select::-ms-expand {
+    display: none;
+}
+
+/* (Opsional) Styling option, mungkin tidak konsisten */
+/* .contact-form select option {
+    padding: 10px;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+} */
+
+/* Tombol submit di form */
+.contact-form button[type="submit"] { /* Lebih spesifik */
+    margin-top: 10px;
+}
+
+/* Elemen status form */
+#form-status {
+    margin-top: 1rem;
+    font-weight: bold;
+    min-height: 1.2em; /* Beri tinggi agar layout tidak lompat */
+}
+
+/* Info Kontak */
+.contact-info h3 {
+    margin-bottom: 1.5rem;
+}
+.contact-info p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+    color: #444;
+}
+.contact-info strong {
+    color: var(--primary-color);
+    margin-right: 5px;
+}
+.contact-info i { /* Ikon kontak */
+    color: var(--secondary-color);
+    margin-right: 10px;
+    width: 20px; /* Lebar tetap agar rapi */
+    text-align: center;
+}
+.contact-info a {
+    color: #444;
+    transition: color 0.3s ease;
+    word-break: break-word;
+}
+.contact-info a:hover {
+    color: var(--secondary-color);
+}
+
+.map-container {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 2rem;
+    box-shadow: var(--soft-shadow);
+    height: 300px;
+}
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--primary-color);
+    color: #a9b8c6;
+    text-align: center;
+    padding: 30px 0;
+}
+footer p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+footer .logo { /* Styling ulang logo di footer */
+     font-size: 1.5rem;
+     text-shadow: none;
+     color: var(--light-color);
+     display: inline-block; /* Agar margin bawah bekerja */
+     margin-bottom: 0.5rem;
+ }
+ footer .logo span {
+     color: var(--secondary-color);
+ }
+footer a { /* Link umum di footer */
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+footer a:hover {
+    color: var(--light-color);
+}
+.footer-social-links {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem; /* Beri jarak ke copyright */
+}
+.footer-social-links a { /* Link ikon sosial */
+    color: #a9b8c6;
+    margin: 0 10px;
+    font-size: 1.3rem;
+    transition: color 0.3s ease;
+    font-weight: normal; /* Reset bold dari link umum */
+}
+.footer-social-links a:hover {
+    color: var(--secondary-color);
+}
+footer p:last-of-type { /* Paragraf terakhir (Back to top) */
+    margin-top: 1rem;
+}
+
+/* --- Responsiveness --- */
+
+/* Tablet Lanskap & Desktop Kecil */
+@media (max-width: 992px) {
+    h1 { font-size: 2.8rem; }
+    h2 { font-size: 2.2rem; }
+    .hero h1 { font-size: 3.2rem; }
+    .hero p { font-size: 1.2rem; max-width: 90%; }
+
+    .about-grid {
+        grid-template-columns: 1fr; /* Satu kolom */
+        gap: 40px;
+    }
+    .about-image {
+        max-width: 500px;
+        margin: 0 auto;
+        order: -1; /* Pindah gambar ke atas */
+    }
+    .about-image::before {
+        display: none; /* Sembunyikan border dekoratif */
+    }
+    .contact-grid {
+        gap: 40px;
+    }
+}
+
+/* Tablet Portrait & Mobile Lanskap */
+@media (max-width: 768px) {
+    :root { --navbar-height: 60px; } /* Navbar lebih pendek */
+
+    h1 { font-size: 2.4rem; }
+    h2 { font-size: 2rem; margin-bottom: 3rem; }
+    h2:not(#contact h2)::after { bottom: -12px; } /* Sesuaikan posisi garis bawah */
+
+    .hero { min-height: 80vh; }
+    .hero h1 { font-size: 2.5rem; }
+    .hero p { font-size: 1.1rem; }
+
+    section { padding: 80px 0; }
+
+    .navbar .container {
+        flex-wrap: wrap;
+        padding: 0 20px; /* Padding normal di mobile */
+    }
+    .navbar nav ul {
+        display: none; /* Sembunyikan by default */
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--primary-color);
+        position: absolute;
+        top: var(--navbar-height);
+        left: 0;
+        padding: 15px 0;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+    .navbar nav ul.active { /* Tampilkan saat aktif */
+        display: flex;
+    }
+    .navbar nav ul li {
+        margin: 10px 0;
+        text-align: center;
+        width: 100%;
+        margin-left: 0;
+    }
+    .navbar nav ul li a {
+        padding: 10px 0;
+        display: block;
+        width: 100%;
+        text-shadow: none;
+    }
+    .navbar nav ul li a::after { /* Sembunyikan garis bawah di menu mobile */
+        display: none;
+    }
+
+    /* Tampilkan tombol burger */
+    .menu-toggle {
+        display: block;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr; /* Satu kolom */
+        gap: 30px;
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 15px;
+    }
+    .contact-grid {
+        grid-template-columns: 1fr; /* Satu kolom */
+    }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+    html { font-size: 15px; } /* Kecilkan font dasar global */
+
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.8rem; }
+
+    .hero h1 { font-size: 2.2rem; }
+    .hero p { font-size: 1rem; }
+
+    .btn { padding: 12px 25px; font-size: 0.9rem; }
+
+    section { padding: 60px 0; }
+
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr; /* 2 kolom di layar sangat kecil */
+        gap: 10px;
+    }
+    .gallery-item img { /* Sesuaikan tinggi gambar galeri */
+        height: 200px;
+    }
+    /* Tidak perlu .gallery-item { height: 200px; } karena tinggi diatur oleh img */
+}
+
+/* --- Style untuk Status Form Kontak --- */
+
+/* Style dasar untuk #form-status */
+#form-status {
+    margin-top: 1rem;
+    font-weight: bold;
+    min-height: 1.2em; /* Agar layout tidak lompat */
+    padding: 12px 18px; /* Tambah padding agar lebih lega */
+    border-radius: 6px; /* Sedikit lengkungan di sudut */
+    border-left: 5px solid transparent; /* Border kiri untuk aksen */
+    display: none; /* Sembunyikan by default, kita tampilkan dengan JS */
+    transition: opacity 0.4s ease, background-color 0.4s ease, border-color 0.4s ease; /* Transisi halus */
+    opacity: 0;
+    font-size: 0.95rem; /* Sedikit sesuaikan ukuran font */
+}
+
+/* Class untuk menampilkan status */
+#form-status.visible {
+    display: block; /* Tampilkan elemen */
+    opacity: 1; /* Buat terlihat */
+}
+
+/* Status Loading (sedang proses) */
+#form-status.loading {
+    background-color: #e7f3fe; /* Biru sangat muda */
+    color: #0c5460; /* Biru agak gelap */
+    border-left-color: var(--primary-color); /* Aksen biru primary */
+}
+
+/* Status Sukses */
+#form-status.success {
+    background-color: #d4edda; /* Hijau muda */
+    color: #155724; /* Hijau tua */
+    border-left-color: #28a745; /* Aksen hijau */
+}
+
+/* Status Error (untuk validasi) */
+#form-status.error {
+    background-color: #f8d7da; /* Merah muda */
+    color: #721c24; /* Merah tua */
+    border-left-color: #dc3545; /* Aksen merah */
+}
+
+/* Opsional: Tambahkan ikon menggunakan Font Awesome (::before) */
+/* Pastikan Font Awesome sudah dimuat di HTML Anda */
+#form-status.loading::before,
+#form-status.success::before,
+#form-status.error::before {
+    font-family: 'Font Awesome 6 Free'; /* Sesuaikan jika versi berbeda */
+    font-weight: 900; /* Biasanya ikon solid */
+    margin-right: 10px; /* Jarak ikon ke teks */
+    display: inline-block;
+}
+
+#form-status.loading::before {
+    content: '\f110'; /* Kode ikon spinner/loading */
+    animation: fa-spin 1.5s infinite linear; /* Animasi berputar */
+}
+
+#form-status.success::before {
+    content: '\f00c'; /* Kode ikon check/centang */
+    color: #28a745;
+}
+
+#form-status.error::before {
+    content: '\f071'; /* Kode ikon warning/peringatan */
+    color: #dc3545;
+}
+
+/* Keyframes untuk animasi putar (jika belum ada) */
+@keyframes fa-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==================================================
+   AKHIR STYLE.CSS
+   ================================================== */
